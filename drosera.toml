@@ -1,0 +1,7 @@
+ethereum_rpc = "https://eth-mainnet.g.alchemy.com/v2/YOUR_KEY"
+drosera_rpc  = "https://relay.hoodi.drosera.io"
+eth_chain_id = 1
+drosera_address = "0x0000000000000000000000000000000000000000"
+
+[traps]
+flash-trap-drosera = { address = "deploy", responder = "print" }
