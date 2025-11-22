@@ -16,12 +16,20 @@ contract FlashTrapTest is Test {
     }
 
     function testShouldRespondEmpty() public view {
-        // simulate operator passing empty data
+        // simulate operator passing empty data array
         bytes;
+
+        // encode dummy snapshot
+        snapshots[0] = abi.encode(
+            address(0x1234),   // wallet
+            uint256(0),        // delta
+            uint256(10),       // threshold
+            uint256(5)         // window
+        );
 
         (bool alert, bytes memory payload) = trap.shouldRespond(snapshots);
 
-        // empty snapshots → no alert
+        // delta = 0 < threshold = 10 → no alert
         assertEq(alert, false);
         assertEq(payload.length, 0);
     }
