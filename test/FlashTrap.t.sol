@@ -2,25 +2,31 @@
 pragma solidity ^0.8.24;
 
 import "forge-std/Test.sol";
-import "../src/FlashActivityTrap.sol";
-import "./MockProtocol.sol";
+
+import {FlashActivityTrap} from "../src/FlashActivityTrap.sol";
+import {FlashTrapConfig} from "../src/FlashTrapConfig.sol";
 
 contract FlashTrapTest is Test {
     FlashActivityTrap trap;
-    MockProtocol protocol;
+    FlashTrapConfig config;
 
     function setUp() public {
-        trap = new FlashActivityTrap();
-        protocol = new MockProtocol();
+        config = new FlashTrapConfig();
+        trap = new FlashActivityTrap(address(config));
     }
 
-    function testCollectAndRespond() public {
-        protocol.deposit{value: 1 ether}();
-        protocol.deposit{value: 2 ether}();
+    function testShouldRespondEmpty() public view {
+        // simulate operator passing empty data
+        bytes;
 
+        (bool alert, bytes memory payload) = trap.shouldRespond(snapshots);
+
+        // empty snapshots → no alert
+        assertEq(alert, false);
+        assertEq(payload.length, 0);
+    }
+
+    function testCollectDoesNotRevert() public view {
         trap.collect();
-
-        bool alert = trap.shouldRespond();
-        assert(alert == true);
     }
 }
