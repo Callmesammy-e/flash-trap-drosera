@@ -1,7 +1,23 @@
-ethereum_rpc = "https://eth-hoodi.g.alchemy.com/v2/YOUR_KEY"
-drosera_rpc = "https://relay.hoodi.drosera.io"
+ethereum_rpc = "https://eth-hoodi.g.alchemy.com/v2/YOUR_API_KEY"
+drosera_rpc  = "https://relay.hoodi.drosera.io"
 eth_chain_id = 560048
 drosera_address = "0x91cB447BaFc6e0EA0F4Fe056F5a9b1F14bb06e5D"
 
 [traps]
-flash_activity_trap = { active = true, threshold = 5 }
+
+[traps.flash_activity]
+path = "out/FlashActivityTrap.sol/FlashActivityTrap.json"
+
+# ONLY include this if your trap is deployed and requires constructor args
+trap_address = "0xYourTrapAddress"
+
+response_contract = "0xYourResponder"
+response_function = "respond(bytes)"
+
+cooldown_period_blocks = 10
+min_number_of_operators = 1
+max_number_of_operators = 3
+
+block_sample_size = 2
+private_trap = true
+whitelist = ["0xYourEOA"]
